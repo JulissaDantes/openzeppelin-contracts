@@ -143,6 +143,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Also emits a {Sent} event.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function transfer(address recipient, uint256 amount) public virtual override returns (bool) {
         require(recipient != address(0), "ERC777: transfer to the zero address");
 
@@ -275,6 +276,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Emits {Sent}, {IERC20-Transfer} and {IERC20-Approval} events.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function transferFrom(
         address holder,
         address recipient,
@@ -342,6 +344,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      * - if `account` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function _mint(
         address account,
         uint256 amount,
@@ -374,6 +377,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      * @param operatorData bytes extra information provided by the operator (if any)
      * @param requireReceptionAck if true, contract recipients are required to implement ERC777TokensRecipient
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function _send(
         address from,
         address to,
@@ -401,6 +405,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      * @param data bytes extra information provided by the token holder
      * @param operatorData bytes extra information provided by the operator (if any)
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function _burn(
         address from,
         uint256 amount,

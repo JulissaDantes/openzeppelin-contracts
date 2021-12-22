@@ -77,6 +77,7 @@ abstract contract ERC1967Upgrade {
      *
      * Emits an {Upgraded} event.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function _upgradeToAndCallSecure(
         address newImplementation,
         bytes memory data,

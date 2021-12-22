@@ -86,6 +86,7 @@ abstract contract GovernorTimelockControl is IGovernorTimelock, Governor {
     /**
      * @dev Function to queue a proposal to the timelock.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function queue(
         address[] memory targets,
         uint256[] memory values,
@@ -122,6 +123,7 @@ abstract contract GovernorTimelockControl is IGovernorTimelock, Governor {
      * @dev Overriden version of the {Governor-_cancel} function to cancel the timelocked proposal if it as already
      * been queued.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function _cancel(
         address[] memory targets,
         uint256[] memory values,

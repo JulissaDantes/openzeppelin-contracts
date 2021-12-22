@@ -25,6 +25,7 @@ abstract contract ERC20Wrapper is ERC20 {
     /**
      * @dev Allow a user to deposit underlying tokens and mint the corresponding number of wrapped tokens.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function depositFor(address account, uint256 amount) public virtual returns (bool) {
         SafeERC20.safeTransferFrom(underlying, _msgSender(), address(this), amount);
         _mint(account, amount);

@@ -16,12 +16,12 @@ contract AddressImpl {
     function sendValue(address payable receiver, uint256 amount) external {
         Address.sendValue(receiver, amount);
     }
-
+//slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function functionCall(address target, bytes calldata data) external {
         bytes memory returnData = Address.functionCall(target, data);
         emit CallReturnValue(abi.decode(returnData, (string)));
     }
-
+//slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function functionCallWithValue(
         address target,
         bytes calldata data,
@@ -30,12 +30,12 @@ contract AddressImpl {
         bytes memory returnData = Address.functionCallWithValue(target, data, value);
         emit CallReturnValue(abi.decode(returnData, (string)));
     }
-
+//slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function functionStaticCall(address target, bytes calldata data) external {
         bytes memory returnData = Address.functionStaticCall(target, data);
         emit CallReturnValue(abi.decode(returnData, (string)));
     }
-
+//slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function functionDelegateCall(address target, bytes calldata data) external {
         bytes memory returnData = Address.functionDelegateCall(target, data);
         emit CallReturnValue(abi.decode(returnData, (string)));

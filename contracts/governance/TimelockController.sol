@@ -261,6 +261,7 @@ contract TimelockController is AccessControl {
      *
      * - the caller must have the 'executor' role.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function execute(
         address target,
         uint256 value,
@@ -322,6 +323,7 @@ contract TimelockController is AccessControl {
      *
      * Emits a {CallExecuted} event.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function _call(
         bytes32 id,
         uint256 index,

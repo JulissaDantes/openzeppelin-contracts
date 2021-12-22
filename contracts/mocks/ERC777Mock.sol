@@ -7,7 +7,7 @@ import "../token/ERC777/ERC777.sol";
 
 contract ERC777Mock is Context, ERC777 {
     event BeforeTokenTransfer();
-
+//slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     constructor(
         address initialHolder,
         uint256 initialBalance,

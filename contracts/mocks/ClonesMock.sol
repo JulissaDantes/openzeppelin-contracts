@@ -26,7 +26,7 @@ contract ClonesMock {
     function predictDeterministicAddress(address implementation, bytes32 salt) public view returns (address predicted) {
         return implementation.predictDeterministicAddress(salt);
     }
-
+//slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function _initAndEmit(address instance, bytes memory initdata) private {
         if (initdata.length > 0) {
             instance.functionCallWithValue(initdata, msg.value);

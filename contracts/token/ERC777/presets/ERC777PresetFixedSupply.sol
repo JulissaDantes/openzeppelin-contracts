@@ -18,6 +18,7 @@ contract ERC777PresetFixedSupply is ERC777 {
      *
      * See {ERC777-constructor}.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     constructor(
         string memory name,
         string memory symbol,

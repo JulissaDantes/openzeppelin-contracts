@@ -51,6 +51,7 @@ contract Escrow is Ownable {
      *
      * @param payee The address whose funds will be withdrawn and transferred to.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function withdraw(address payable payee) public virtual onlyOwner {
         uint256 payment = _deposits[payee];
 

@@ -133,7 +133,7 @@ contract CompTimelock {
 
         emit CancelTransaction(txHash, target, value, signature, data, eta);
     }
-
+//slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function executeTransaction(
         address target,
         uint256 value,

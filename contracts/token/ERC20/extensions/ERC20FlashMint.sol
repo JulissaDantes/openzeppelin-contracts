@@ -56,6 +56,7 @@ abstract contract ERC20FlashMint is ERC20, IERC3156FlashLender {
      * @param data An arbitrary datafield that is passed to the receiver.
      * @return `true` is the flash loan was successful.
      */
+     //slither-disable-next-line reentrancy-eth,reentrancy-no-eth,reentrancy-benign,reentrancy-events,reentrancy-unlimited-gas
     function flashLoan(
         IERC3156FlashBorrower receiver,
         address token,
