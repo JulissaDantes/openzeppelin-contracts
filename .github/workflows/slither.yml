@@ -6,9 +6,9 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-      - name: Clean project 
-        - run: npm ci
-        - run: npm run clean
+      - run: npm ci
+      - name: Clean project         
+        run: npm run clean
       - uses: actions/checkout@v2
       - uses: crytic/slither-action@v0.1.0
 
