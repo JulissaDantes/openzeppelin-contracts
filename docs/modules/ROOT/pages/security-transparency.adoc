@@ -1,0 +1,53 @@
+= Security Transparency
+
+The OpenZeppelin Contracts is a library for secure smart contract development, to ensure said claim we take the necessary measures. 
+
+Here we describe all the procedures involved in the process of making sure the contracts are secure after each iteration, and all the past issues we have solved.
+
+[[development-process]]
+=== Development process
+
+Before adding a new item to our roadmap, an issue is created in the repository where the discussion of how it can be implemented starts. When it's time for development before it gets merged into the `master` branch, the new code must be submitted via Pull Request where it gets thoroughly reviewed by members of the team(normally external contributions receive 2 reviews from different maintainers, and team member contributions receive 1 review from another maintainer), and occasionally by members of the community. 
+
+Besides the manual review process there are automtic check in place for each commit: 
+
+- Coverage: Total coverage is not allowed to drop by more than 1%, and the lines changed in a pull request must have 95% coverage.
+- Gas cost profiling: Gas costs are measured during tests, and pull requests include a report of gas changes.
+- Slither: We only use it to check for reentrancy issues, which have been a source of bugs.
+- Linter: A Solidity linter ensures consistent formatting. A JavaScript linter tries to ensure consistent formatting of tests and scripts.
+- Renovatebot & Dependabot: Bots notify us about security advisories in our npm dependencies and make pull requests to update them. Additionally, a monthly pull request updates all dependencies to the latest versions.
+- Socket: Bot monitors pull requests for new dependencies and analyzes them for security issues.
+
+When it's time to release a new version, a Release Candidate is published, the purpose of the release candidate is to have a period, normally a week or three, where the community can review the new code and report issues before the actual release. If important problems are discovered, several more release candidates may be required.
+[gather all info of audits per contracts, made the distinction between formal verification and audits and internal audits too, make a table of the contracts and version that was covered for now that will be internal]
+[[bug-bounty]]
+=== Bug Bounty
+
+We incentivize the community through a https://immunefi.com/bounty/openzeppelin/[bug bounty] program with Inmunefi, to report any bug in a release that was not caught during the Release candidate period. The reward amount is given based on the level of the severity of the issue found. This bug bounty program is focused on their smart contracts and is focused on preventing:
+
+- Loss of funds by freezing or theft
+- Denial of service (smart contract is made unable to operate)
+- Access control is bypassed, including privilege escalation
+- Smart contract does not behave as intended
+
+The scope of the bug bounty program is the OpenZeppelin Smart Contracts library repository.
+
+[[audits]]
+=== Audits
+
+The last step in ensuring the security of the contract is we rely on third party audits. You can find them inside our repository under the https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/audit[audits/] directory.
+
+
+[[incident-response]]
+== Incident Response
+
+When a a vulnerability reported for OpenZeppelin Contracts we follow these steps to ensure a correct course of action:
+
+1. Identify
+This stage happens right after we get a notification of a possible vurnerability, the goal here is to collect data to analyse if is a real vurnerability, if we realize the vurnerability is possible we determine the severity of the alert, and which contracts might be affected by it, gathering also addresses of known deployed instances of these affected contracts. 
+
+2. Assess
+We evaluate each entry in the lists of contracts we identified in the previous step, and verify how the vulnerability might be affecting them.
+
+3. Mitigate
+We work of solutions for the contracts library and for the deployed intances of the affected contracts. After the affected contracts in step 2 are notified of the vulnerability and told a possible solution if any, we publish a security advisory and share it on Twitter. This and the previous step might be happening at the same time by different members of our team.
