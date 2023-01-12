@@ -12,6 +12,10 @@ module.exports['typed-params'] = params => {
   return params.map(p => `${p.type}${p.name ? ' ' + p.name : ''}`).join(', ');
 };
 
+module.exports['indexed-params'] = params => {
+  return params.map(p => `${p.indexed ? 'indexed': ''}`).join(', ');
+};
+
 const slug = (module.exports.slug = str => {
   if (str === undefined) {
     throw new Error('Missing argument');
