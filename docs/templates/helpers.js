@@ -9,10 +9,12 @@ module.exports['readme-path'] = opts => {
 module.exports.names = params => params.map(p => p.name).join(', ');
 
 module.exports['typed-params'] = params => {
+  if (params == undefined) return [];
   return params.map(p => `${p.type}${p.name ? ' ' + p.name : ''}`).join(', ');
 };
 
-module.exports['indexed-params'] = params => {
+module.exports['isIndexed'] = params => {
+  if (params == undefined) return [];
   return params.map(p => `${p.indexed ? 'indexed': ''}`).join(', ');
 };
 
