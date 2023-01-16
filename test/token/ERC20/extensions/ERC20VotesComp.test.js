@@ -4,13 +4,14 @@ const { BN, constants, expectEvent, expectRevert, time } = require('@openzeppeli
 const { expect } = require('chai');
 const { MAX_UINT256, ZERO_ADDRESS } = constants;
 
+const { batchInBlock } = require('../../../helpers/txpool');
+const { shouldBehaveLikeVotes } = require('../../../governance/utils/Votes.behavior');
 const { fromRpcSig } = require('ethereumjs-util');
 const ethSigUtil = require('eth-sig-util');
 const Wallet = require('ethereumjs-wallet').default;
 
 const ERC20VotesComp = artifacts.require('$ERC20VotesComp');
 
-const { batchInBlock } = require('../../../helpers/txpool');
 const { EIP712Domain, domainSeparator } = require('../../../helpers/eip712');
 const { getChainId } = require('../../../helpers/chainid');
 
@@ -30,7 +31,7 @@ contract('ERC20VotesComp', function (accounts) {
 
   beforeEach(async function () {
     this.chainId = await getChainId();
-    this.token = await ERC20VotesComp.new(name, symbol, name);
+    this.token = await ERC20VotesComp.new(name, symbol, name, version);
   });
 
   it('initial nonce is 0', async function () {
@@ -157,7 +158,7 @@ contract('ERC20VotesComp', function (accounts) {
 
         await expectRevert(
           this.token.delegateBySig(delegatorAddress, nonce, MAX_UINT256, v, r, s),
-          'ERC20Votes: invalid nonce',
+          'Votes: invalid nonce',
         );
       });
 
@@ -193,7 +194,7 @@ contract('ERC20VotesComp', function (accounts) {
         );
         await expectRevert(
           this.token.delegateBySig(delegatorAddress, nonce + 1, MAX_UINT256, v, r, s),
-          'ERC20Votes: invalid nonce',
+          'Votes: invalid nonce',
         );
       });
 
@@ -212,7 +213,7 @@ contract('ERC20VotesComp', function (accounts) {
 
         await expectRevert(
           this.token.delegateBySig(delegatorAddress, nonce, expiry, v, r, s),
-          'ERC20Votes: signature expired',
+          'Votes: signature expired',
         );
       });
     });
@@ -388,7 +389,7 @@ contract('ERC20VotesComp', function (accounts) {
 
     describe('getPriorVotes', function () {
       it('reverts if block number >= current block', async function () {
-        await expectRevert(this.token.getPriorVotes(other1, 5e10), 'ERC20Votes: block not yet mined');
+        await expectRevert(this.token.getPriorVotes(other1, 5e10), 'Checkpoints: block not yet mined');
       });
 
       it('returns 0 if there are no checkpoints', async function () {
@@ -469,7 +470,7 @@ contract('ERC20VotesComp', function (accounts) {
     });
 
     it('reverts if block number >= current block', async function () {
-      await expectRevert(this.token.getPastTotalSupply(5e10), 'ERC20Votes: block not yet mined');
+      await expectRevert(this.token.getPastTotalSupply(5e10), 'Checkpoints: block not yet mined');
     });
 
     it('returns 0 if there are no checkpoints', async function () {
@@ -538,5 +539,14 @@ contract('ERC20VotesComp', function (accounts) {
         '10000000000000000000000000',
       );
     });
+  });
+
+  describe('Voting workflow', function () {
+    beforeEach(async function () {
+      this.name = name;
+      this.votes = this.token;
+    });
+
+    shouldBehaveLikeVotes(accounts, [1, 17, 42]);
   });
 });

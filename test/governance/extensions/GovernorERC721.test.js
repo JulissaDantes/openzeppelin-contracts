@@ -1,5 +1,6 @@
 const { BN, expectEvent } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
+
 const Enums = require('../../helpers/enums');
 const { GovernorHelper } = require('../../helpers/governance');
 
@@ -11,7 +12,7 @@ contract('GovernorERC721', function (accounts) {
   const [owner, voter1, voter2, voter3, voter4] = accounts;
 
   const name = 'OZ-Governor';
-  // const version = '1';
+  const version = '1';
   const tokenName = 'MockNFToken';
   const tokenSymbol = 'MTKN';
   const NFT0 = new BN(0);
@@ -25,7 +26,7 @@ contract('GovernorERC721', function (accounts) {
 
   beforeEach(async function () {
     this.owner = owner;
-    this.token = await Token.new(tokenName, tokenSymbol, tokenName, '1');
+    this.token = await Token.new(tokenName, tokenSymbol, tokenName, version);
     this.mock = await Governor.new(name, this.token.address);
     this.receiver = await CallReceiver.new();
 

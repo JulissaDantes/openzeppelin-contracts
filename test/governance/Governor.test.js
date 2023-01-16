@@ -3,7 +3,9 @@ const { expect } = require('chai');
 const ethSigUtil = require('eth-sig-util');
 const Wallet = require('ethereumjs-wallet').default;
 const { fromRpcSig } = require('ethereumjs-util');
+
 const Enums = require('../helpers/enums');
+const { getChainId } = require('../helpers/chainid');
 const { EIP712Domain } = require('../helpers/eip712');
 const { GovernorHelper } = require('../helpers/governance');
 
@@ -29,8 +31,8 @@ contract('Governor', function (accounts) {
   const value = web3.utils.toWei('1');
 
   beforeEach(async function () {
-    this.chainId = await web3.eth.getChainId();
-    this.token = await Token.new(tokenName, tokenSymbol, tokenName);
+    this.chainId = await getChainId();
+    this.token = await Token.new(tokenName, tokenSymbol, tokenName, version);
     this.mock = await Governor.new(
       name, // name
       votingDelay, // initialVotingDelay

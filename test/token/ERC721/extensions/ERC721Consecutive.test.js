@@ -1,5 +1,6 @@
 const { constants, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
+const { sum } = require('../../../helpers/math');
 
 const ERC721ConsecutiveMock = artifacts.require('$ERC721ConsecutiveMock');
 const ERC721ConsecutiveEnumerableMock = artifacts.require('$ERC721ConsecutiveEnumerableMock');
@@ -59,10 +60,7 @@ contract('ERC721Consecutive', function (accounts) {
 
       it('balance & voting power are set', async function () {
         for (const account of accounts) {
-          const balance = batches
-            .filter(({ receiver }) => receiver === account)
-            .map(({ amount }) => amount)
-            .reduce((a, b) => a + b, 0);
+          const balance = sum(...batches.filter(({ receiver }) => receiver === account).map(({ amount }) => amount));
 
           expect(await this.token.balanceOf(account)).to.be.bignumber.equal(web3.utils.toBN(balance));
 
@@ -88,7 +86,7 @@ contract('ERC721Consecutive', function (accounts) {
       });
 
       it('simple minting is possible after construction', async function () {
-        const tokenId = batches.reduce((acc, { amount }) => acc + amount, 0);
+        const tokenId = sum(...batches.map(b => b.amount));
 
         expect(await this.token.$_exists(tokenId)).to.be.equal(false);
 
@@ -100,7 +98,7 @@ contract('ERC721Consecutive', function (accounts) {
       });
 
       it('cannot mint a token that has been batched minted', async function () {
-        const tokenId = batches.reduce((acc, { amount }) => acc + amount, 0) - 1;
+        const tokenId = sum(...batches.map(b => b.amount)) - 1;
 
         expect(await this.token.$_exists(tokenId)).to.be.equal(true);
 
@@ -134,7 +132,7 @@ contract('ERC721Consecutive', function (accounts) {
       });
 
       it('tokens can be burned and re-minted #2', async function () {
-        const tokenId = batches.reduce((acc, { amount }) => acc.addn(amount), web3.utils.toBN(0));
+        const tokenId = web3.utils.toBN(sum(...batches.map(({ amount }) => amount)));
 
         expect(await this.token.$_exists(tokenId)).to.be.equal(false);
         await expectRevert(this.token.ownerOf(tokenId), 'ERC721: invalid token ID');

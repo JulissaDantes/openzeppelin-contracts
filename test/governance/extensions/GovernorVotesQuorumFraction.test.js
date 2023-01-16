@@ -1,5 +1,6 @@
 const { BN, expectEvent, expectRevert, time } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
+
 const Enums = require('../../helpers/enums');
 const { GovernorHelper } = require('../../helpers/governance');
 
@@ -11,7 +12,7 @@ contract('GovernorVotesQuorumFraction', function (accounts) {
   const [owner, voter1, voter2, voter3, voter4] = accounts;
 
   const name = 'OZ-Governor';
-  // const version = '1';
+  const version = '1';
   const tokenName = 'MockToken';
   const tokenSymbol = 'MTKN';
   const tokenSupply = new BN(web3.utils.toWei('100'));
@@ -23,7 +24,7 @@ contract('GovernorVotesQuorumFraction', function (accounts) {
 
   beforeEach(async function () {
     this.owner = owner;
-    this.token = await Token.new(tokenName, tokenSymbol, tokenName);
+    this.token = await Token.new(tokenName, tokenSymbol, tokenName, version);
     this.mock = await Governor.new(name, votingDelay, votingPeriod, 0, this.token.address, ratio);
     this.receiver = await CallReceiver.new();
 
